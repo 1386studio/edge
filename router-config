@@ -1,0 +1,266 @@
+#
+ drop illegal-mac alarm
+#
+ set workmode lan-card l3centralize
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name portal_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name multi_authen_profile
+#
+dns resolve 
+dns server 114.114.114.114 
+dns server 223.5.5.5 
+dns server 10.10.10.20 
+dns domain grapps.cn 
+dns proxy enable
+dns relay enable
+#
+ arp anti-attack entry-check send-ack enable 
+#
+dhcp enable
+#                                         
+radius-server template default            
+#
+pki realm default
+#
+ssl policy default_policy type server
+ pki-realm default
+ version tls1.0 tls1.1 
+ ciphersuite rsa_aes_128_cbc_sha 
+#
+acl number 2000  
+ rule 1 deny source 10.10.10.20 0 
+ rule 5 permit source 10.10.0.0 0.0.255.255 
+ rule 10 permit source 192.168.110.0 0.0.0.255 
+#
+ike proposal default
+ encryption-algorithm aes-256 
+ dh group14 
+ authentication-algorithm sha2-256 
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256 
+ prf hmac-sha2-256 
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+aaa
+ authentication-scheme default
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+  authentication-scheme default
+ domain default_admin
+  authentication-scheme default
+ local-user admin password irreversible-cipher $1a$uqs{>Ml~M6$sQ'.'0^\H7-BuoS:*ZrSdo0C1_VnN:Aw\wN;U~aB$
+ local-user admin privilege level 15
+ local-user admin service-type telnet terminal http
+ local-user telnet password irreversible-cipher $1a$^.0}:\o"G3$$0<$;fK3p>zC@gR0>p(-8tTa(96pB4\v[M&UDSxR$
+ local-user telnet privilege level 15
+ local-user telnet service-type telnet terminal ssh ftp x25-pad http
+#
+firewall zone Local
+#
+interface Vlanif1
+ ip address 113.140.84.34 255.255.255.0
+ ip address 10.10.0.1 255.255.0.0 sub
+ ip address 192.168.110.254 255.255.255.0 sub
+ nat server protocol tcp global interface Vlanif 1 www inside 10.10.200.200 www
+ nat server protocol tcp global interface Vlanif 1 8092 inside 10.10.200.208 8092
+ nat server protocol tcp global interface Vlanif 1 8088 inside 10.10.200.208 8088
+ nat server protocol tcp global interface Vlanif 1 8089 inside 10.10.200.208 8089
+ nat server protocol tcp global interface Vlanif 1 1935 inside 10.10.200.209 1935
+ nat server protocol tcp global interface Vlanif 1 5222 inside 10.10.200.208 5222
+ nat server protocol tcp global interface Vlanif 1 5280 inside 10.10.200.208 5280
+ nat server protocol tcp global interface Vlanif 1 443 inside 10.10.200.212 443
+ nat server protocol tcp global interface Vlanif 1 8099 inside 10.10.200.209 8099
+ nat server protocol tcp global interface Vlanif 1 8188 inside 10.10.200.213 8188
+ nat server protocol tcp global interface Vlanif 1 4443 inside 10.10.200.210 4443
+ nat server protocol tcp global interface Vlanif 1 8443 inside 10.10.200.210 8443
+ nat server protocol udp global interface Vlanif 1 10000 inside 10.10.200.210 10000
+ nat server protocol tcp global interface Vlanif 1 6143 inside 10.10.200.212 6143
+ nat server protocol tcp global interface Vlanif 1 6443 inside 10.10.200.212 6443
+ nat server protocol tcp global interface Vlanif 1 6080 inside 10.10.200.212 6080
+ nat server protocol tcp global interface Vlanif 1 7443 inside 10.10.200.212 7443
+ nat server protocol tcp global interface Vlanif 1 18092 inside 10.10.200.213 18092
+ nat server protocol tcp global interface Vlanif 1 15280 inside 10.10.200.213 15280
+ nat server protocol tcp global interface Vlanif 1 18088 inside 10.10.200.213 18088
+ nat server protocol tcp global interface Vlanif 1 18089 inside 10.10.200.213 18089
+ nat server protocol tcp global interface Vlanif 1 3478 inside 10.10.200.208 3478
+ nat server protocol udp global interface Vlanif 1 49160 inside 10.10.200.208 49160
+ nat server protocol udp global interface Vlanif 1 49161 inside 10.10.200.208 49161
+ nat server protocol udp global interface Vlanif 1 49162 inside 10.10.200.208 49162
+ nat server protocol tcp global interface Vlanif 1 5565 inside 10.10.200.212 5565
+ nat outbound 2000 
+ arp-proxy enable
+#
+interface GigabitEthernet0/0/0
+ ip address 192.168.1.1 255.255.255.0
+#
+interface GigabitEthernet0/0/1
+#
+interface GigabitEthernet0/0/2
+#
+interface GigabitEthernet0/0/3
+#
+interface GigabitEthernet0/0/4
+#
+interface GigabitEthernet0/0/5
+#
+interface GigabitEthernet0/0/6
+#
+interface GigabitEthernet0/0/7
+#
+interface GigabitEthernet0/0/8
+#                                         
+interface GigabitEthernet0/0/9
+#
+interface GigabitEthernet0/0/10
+#
+interface GigabitEthernet0/0/11
+#
+interface GigabitEthernet0/0/12
+#
+interface GigabitEthernet0/0/13
+#
+interface GigabitEthernet0/0/14
+#
+interface GigabitEthernet0/0/15
+#
+interface GigabitEthernet0/0/16
+#
+interface GigabitEthernet0/0/17
+#
+interface GigabitEthernet0/0/18
+#
+interface GigabitEthernet0/0/19
+#
+interface GigabitEthernet0/0/20
+#                                         
+interface GigabitEthernet0/0/21
+#
+interface GigabitEthernet0/0/22
+#
+interface GigabitEthernet0/0/23
+#
+interface GigabitEthernet0/0/24
+#
+interface GigabitEthernet0/0/25
+#
+interface GigabitEthernet0/0/26
+#
+interface GigabitEthernet0/0/27
+#
+interface GigabitEthernet0/0/28
+#
+interface GigabitEthernet0/0/29
+#
+interface GigabitEthernet0/0/30
+#
+interface GigabitEthernet0/0/31
+#
+interface GigabitEthernet0/0/32
+#                                         
+interface GigabitEthernet0/0/33
+#
+interface GigabitEthernet0/0/34
+#
+interface GigabitEthernet0/0/35
+#
+interface GigabitEthernet0/0/36
+#
+interface GigabitEthernet0/0/37
+#
+interface GigabitEthernet0/0/38
+#
+interface GigabitEthernet0/0/39
+#
+interface GigabitEthernet0/0/40
+#
+interface GigabitEthernet0/0/41
+#
+interface GigabitEthernet0/0/42
+#
+interface GigabitEthernet0/0/43
+#
+interface GigabitEthernet0/0/44
+#                                         
+interface GigabitEthernet0/0/45
+#
+interface GigabitEthernet0/0/46
+#
+interface GigabitEthernet0/0/47
+#
+interface GigabitEthernet0/0/48
+#
+interface GigabitEthernet0/0/49
+#
+interface GigabitEthernet0/0/50
+#
+interface GigabitEthernet0/0/51
+ description VirtualPort
+#
+interface Cellular0/0/0
+#
+interface NULL0
+#
+ snmp-agent local-engineid 800007DB035C546D0F247E
+#
+ telnet server enable 
+#
+ http secure-server ssl-policy default_policy
+ http server enable
+ http secure-server enable
+#
+ip route-static 0.0.0.0 0.0.0.0 113.140.84.33
+#
+fib regularly-refresh disable
+#
+user-interface con 0
+ authentication-mode password
+ set authentication password cipher %^%#q:/c4mB/,>l<AUJtj]t1Rq88.LlI5V40sxJ#{rjLRqy&LL(}rQ-jkx:W}d2G%^%#
+user-interface vty 0
+ authentication-mode aaa
+ user privilege level 15
+user-interface vty 1 4
+ authentication-mode aaa
+#
+wlan ac
+ traffic-profile name default
+ security-profile name default
+ security-profile name default-wds
+  security wpa2 psk pass-phrase %^%#&&2PU8*Pj5"p}"%ETcuWDJq'$gy.s&0BDSJbP9++%^%# aes
+ ssid-profile name default
+ vap-profile name default
+ wds-profile name default                 
+ regulatory-domain-profile name default
+ air-scan-profile name default
+ rrm-profile name default
+ radio-2g-profile name default
+ radio-5g-profile name default
+ wids-spoof-profile name default
+ wids-profile name default
+ ap-system-profile name default
+ port-link-profile name default
+ wired-port-profile name default
+ ap-group name default
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+ ntp-service cwmp unicast-server 210.72.145.44 first
+#
+ops
+#
+autostart
+#
+secelog
+#                                         
+return
